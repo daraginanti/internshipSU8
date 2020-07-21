@@ -50,16 +50,20 @@ f = f(1,2);
 sysx = ss(Ax,B,C,D);
 sysy = ss(Ay,B,C,D);
 
-x1 = lsim(sysx,u,t,[1,1 1,4 4,1 4,4]);
-y1 = lsim(sysy,u,t,[2,2 2,4 5,2 5,4]);
+x = lsim(sysx,u,t,[2;4;8;2;4;9;8;xdx(4)]);
+y = lsim(sysy,u,t,[0;0;1;8;8;2;9;xdy(4)]);
+
+x1 = lsim(sysx,u,t,[x(f,1);x(f,2);x(f,3);x(f,4);x(f,5);x(f,6);x(f,7);xdx(4)*2]);
+y1 = lsim(sysy,u,t,[y(f,1);y(f,2);y(f,3);y(f,4);y(f,5);y(f,6);y(f,7);xdy(4)*2]);
 
 hold on
-plot(x1(:,1),y1(:,7),'k--', x1(:,2),y1(:,6),'r--',x1(:,3),y1(:,5),'b--',x1(:,4),y1(:,4),'--');
-plot([1,1 1,2 1,3 1,4],[2,1 2,2 2,3 2,4],'o');
-plot([1,2 3,4 5,6 7,8 7,6 5,4 3,2 1,8], '-gx', 'LineWidth',1);
-plot([x1(1,2) x1(3,4) x1(5,6) x1(7,8)],[y1(7,6) y1(5,4) y1(3,2) y1(1,8)], '-md', 'LineWidth',1);
-axis([-4 10 -2 12])
+plot(x(:,1),y(:,1),'k--', x(:,2),y(:,2),'r--',x(:,3),y(:,3),'b--',x(:,4),y(:,4),'--');
+plot([x(1,1) x(1,2) x(1,3) x(1,4)],[y(1,1) y(1,2) y(1,3) y(1,4)], 'o');
+plot([x(f,1) x(f,2) x(f,4) x(f,3) x(f,1)],[y(f,1) y(f,2) y(f,4) y(f,3) y(f,1)], '-gx', 'LineWidth',1)
+plot([x1(f,1) x1(f,2) x1(f,4) x1(f,3) x1(f,1)],[y1(f,1) y1(f,2) y1(f,4) y1(f,3) y1(f,1)], '-md', 'LineWidth',1)
+plot(x1(:,1),y1(:,1),'k--', x1(:,2),y1(:,2),'r--',x1(:,3),y1(:,3),'b--',x1(:,4),y1(:,4),'--');
 legend('agent 1 trajectories','agent 2 trajectories','agent 3 trajectories','agent 4 trajectories','initial position')
+axis([-4 10 -2 12])
 xlabel('x-axis')
 ylabel('yaxis')
 hold off
